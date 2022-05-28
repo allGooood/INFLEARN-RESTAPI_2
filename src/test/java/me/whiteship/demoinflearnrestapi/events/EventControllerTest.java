@@ -102,8 +102,30 @@ public class EventControllerTest {
     }
 
     @Test
+    // @Valid의 @NotEmpty 때문에 걸림
     public void createEvent_Bad_Request_Empty_Input() throws Exception {
         EventDto eventDto = EventDto.builder().build();
+
+        this.mockMvc.perform(post("/api/events")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(this.objectMapper.writeValueAsString(eventDto)))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void createEvent_Bad_Request_Wrong_Input() throws Exception {
+        EventDto eventDto = EventDto.builder()
+                .name("Spring")
+                .description("description")
+                .beginEnrollmentDateTime(LocalDateTime.of(2022, 5, 28,13,27))
+                .closeEnrollmentDateTime(LocalDateTime.of(2022, 5, 29,13,27))
+                .beginEventDateTime(LocalDateTime.of(2022, 5, 30,13,27))
+                .endEventDateTime(LocalDateTime.of(2022, 5, 20,13,27))
+                .basePrice(10000)
+                .maxPrice(200)
+                .limitOfEnrollment(100)
+                .location("강남역 D2 스타텁 팩토리")
+                .build();
 
         this.mockMvc.perform(post("/api/events")
                         .contentType(MediaType.APPLICATION_JSON)
