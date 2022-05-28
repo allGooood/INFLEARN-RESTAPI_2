@@ -1,7 +1,9 @@
 package me.whiteship.demoinflearnrestapi.events;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import me.whiteship.demoinflearnrestapi.common.TestDescription;
 import org.hamcrest.Matchers;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
@@ -43,6 +45,8 @@ public class EventControllerTest {
 //    EventRepository eventRepository;
 
     @Test
+    //@TestDescription("정상적으로 Event를 생성하는 테스트") //JUNIT 4
+    @DisplayName("정상적으로 Event를 생성하는 테스트")
     public void createEvent() throws Exception {
         EventDto event = EventDto.builder()
                 .name("Spring")
@@ -74,6 +78,7 @@ public class EventControllerTest {
     }
 
     @Test
+    @DisplayName("입력 받을 수 없는 값을 사용한 경우 Error 발생")
     public void createEvent_Bad_Request() throws Exception {
         Event event = Event.builder()
                 .id(100)
@@ -102,6 +107,7 @@ public class EventControllerTest {
     }
 
     @Test
+    @DisplayName("입력 값이 비어있는 경우 Error 발생")
     // @Valid의 @NotEmpty 때문에 걸림
     public void createEvent_Bad_Request_Empty_Input() throws Exception {
         EventDto eventDto = EventDto.builder().build();
@@ -113,6 +119,7 @@ public class EventControllerTest {
     }
 
     @Test
+    @DisplayName("입력 값이 잘못된 경우 Error 발생")
     public void createEvent_Bad_Request_Wrong_Input() throws Exception {
         EventDto eventDto = EventDto.builder()
                 .name("Spring")
