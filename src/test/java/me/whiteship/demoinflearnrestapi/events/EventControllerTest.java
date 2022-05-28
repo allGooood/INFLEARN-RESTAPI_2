@@ -72,8 +72,12 @@ public class EventControllerTest {
                 .andExpect(header().exists(HttpHeaders.LOCATION)) // "Location" --> HttpHeaders.LOCATION (TypeSafe하게 하기 위해)
                 .andExpect(header().string(HttpHeaders.CONTENT_TYPE, MediaTypes.HAL_JSON_VALUE))
                 .andExpect(jsonPath("id").value(Matchers.not(100)))
-                .andExpect(jsonPath("free").value(Matchers.not(true)))
+                .andExpect(jsonPath("free").value(false))
+                .andExpect(jsonPath("offline").value(true))
                 .andExpect(jsonPath("eventStatus").value(EventStatus.DRAFT.name()))
+                .andExpect(jsonPath("_link.self").exists())
+                .andExpect(jsonPath("_link.query-events").exists())
+                .andExpect(jsonPath("_link.update-event").exists())
         ;
     }
 
