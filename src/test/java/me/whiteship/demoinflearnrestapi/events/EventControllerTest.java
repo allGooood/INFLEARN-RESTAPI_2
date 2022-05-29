@@ -14,6 +14,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -33,10 +34,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 // WebMvcTest(슬라이스) --> SpringBootTest(통합)로 변경: Mocking할게 너무 많아서 테스트 작성이 불편함
 //@WebMvcTest
 @ExtendWith(SpringExtension.class)
-@SpringBootTest
+@SpringBootTest //--> @SpringBootApplication 스캔
 @AutoConfigureMockMvc
 @AutoConfigureRestDocs
 @Import(RestDocsConfiguration.class)
+@ActiveProfiles("test")
 public class EventControllerTest {
 
     @Autowired
